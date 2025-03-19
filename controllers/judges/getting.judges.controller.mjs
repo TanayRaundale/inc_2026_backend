@@ -83,11 +83,8 @@ function gettingJudgesController(judgesServices, eventsService) {
 
             const projectsNotEvaluated = [];
             const projectsEvaluated = [];
-            // // // console.log(result[0]['allocated_projects'].split(','))
 
             const allocatedProjectIds = result[0]['allocated_projects'].split(',').map(pid => pid.trim());
-
-            // // // console.log("allocatedprojects", allocatedProjectIds)
 
             for (const pid of allocatedProjectIds) {
                 const noteval = await judgesServices.getProjectsNotEvaluatedByJudge(jid, [pid]);

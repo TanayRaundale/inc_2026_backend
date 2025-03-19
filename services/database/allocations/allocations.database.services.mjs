@@ -30,8 +30,6 @@ function allocationServices(db) {
                 return { ...project, jids };
             });
 
-          
-
             return  projectsWithJids;
         } catch (err) {
             throw err;

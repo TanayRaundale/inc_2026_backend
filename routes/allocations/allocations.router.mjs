@@ -13,8 +13,8 @@ function createAllocationsRouter(emailServices, allocationServices, eventsServic
 
     allocationsRouter.patch("/:event_name/lab", verifyAdminValidation(2), validator, verifyAdminLogin, labAllocate)
 
-    allocationsRouter.post("/:event_name/allocate", verifyAdminLogin, allocate)
-    allocationsRouter.patch("/:event_name/deallocate", verifyAdminLogin, deallocate)
+    allocationsRouter.post("/:event_name/allocate", verifyAdminLoginAndAdminRole, allocate)
+    allocationsRouter.patch("/:event_name/deallocate", verifyAdminLoginAndAdminRole, deallocate)
 
     allocationsRouter.get("/:event_name/labs", getLabs)
 

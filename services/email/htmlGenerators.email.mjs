@@ -6,7 +6,7 @@ const __dirname = path.resolve()
 const eventsTemplate = readFileSync(__dirname + '/views/emails/eventRegistration.email.ejs', 'utf8')
 const judgeTemplate = readFileSync(__dirname + '/views/emails/judgeRegistration.email.ejs', 'utf8')
 const onlineConceptsJudgeAllocationTemplate = readFileSync(__dirname + '/views/emails/online.concepts.judgeAllocation.email.ejs', 'utf8')
-const offlineConceptsJudgeAllocationTemplate = readFileSync(__dirname + '/views/emails/offline.concepts.judgeAllocation.email.ejs', 'utf8')
+const offlineConceptsJudgeAllocationTemplate = readFileSync(__dirname + '/views/emails/offlineJudge.email.ejs', 'utf8')
 const offlineImpetusJudgeAllocationTemplate = readFileSync(__dirname + '/views/emails/offline.impetus.judgeAllocation.email.ejs', 'utf8')
 const onlineImpetusJudgeAllocationTemplate = readFileSync(__dirname + '/views/emails/online.impetus.judgeAllocation.email.ejs', 'utf8')
 
@@ -26,25 +26,14 @@ async function judgeRegistrationEmail(judge) {
     }
 }
 
-async function sendAllocationEmail(event_name, projects, judge, judgeCredentials) {
+async function sendAllocationEmail(data) {
     try {
-        // // // console.log("judgeCred : ", judgeCredentials)
-        // // // console.log(event_name)
-
-        if (event_name === 'Concepts') {
-            return ejs.render(offlineConceptsJudgeAllocationTemplate, { data: { projects, judge, judgeCredentials }, filename: __dirname + `/views/emails/offline.concepts.judgeAllocation.email.ejs`, cache: true, async: true })
-        } else {
-            return ejs.render(offlineImpetusJudgeAllocationTemplate, { data: { projects, judge, judgeCredentials }, filename: __dirname + `/views/emails/offline.impetus.judgeAllocation.email.ejs`, cache: true, async: true })
-        }
-        // return ejs.render(onlineConceptsJudgeAllocationTemplate, { data: { projects, judge }, filename: __dirname + '/views/emails/online.concepts.judgeAllocation.email.ejs', cache: true, async: true })
-        // return ejs.render(offlineConceptsJudgeAllocationTemplate, { data: { projects, judge, judgeCredentials }, filename: __dirname + `/views/emails/offline.${event_name}.judgeAllocation.email.ejs`, cache: true, async: true })
-        // return ejs.render(onlineImpetusJudgeAllocationTemplate, { data: { projects, judge }, filename: __dirname + '/views/emails/online.impetus.judgeAllocation.email.ejs', cache: true, async: true })
-        // return ejs.render(offlineImpetusJudgeAllocationTemplate, { data: { projects, judge }, filename: __dirname + '/views/emails/offline.impetus.judgeAllocation.email.ejs', cache: true, async: true })
-        // switch (event_name) {
-        //     case 'concepts':
-
-        //     case 'impetus':
+        // if (event_name === 'Concepts') {
+        //     return ejs.render(offlineConceptsJudgeAllocationTemplate, { data: { projects, judge, judgeCredentials }, filename: __dirname + `/views/emails/offline.concepts.judgeAllocation.email.ejs`, cache: true, async: true })
+        // } else {
+        //     return ejs.render(offlineImpetusJudgeAllocationTemplate, { data: { projects, judge, judgeCredentials }, filename: __dirname + `/views/emails/offline.impetus.judgeAllocation.email.ejs`, cache: true, async: true })
         // }
+        return ejs.render(offlineConceptsJudgeAllocationTemplate, { data, filename: __dirname + `/views/emails/offlineJudge.email.ejs`, cache: true, async: true })
     } catch (err) {
         throw err
     }

@@ -1,7 +1,11 @@
 import { sendCookie, randomID, AppError } from "../../utils/index.js";
-import { eventsName, teamSize, projectTypes } from "../../static/eventsData.mjs";
+import { eventsName, teamSize, projectTypes, getJudgingSlots } from "../../static/eventsData.mjs";
 import { pictDetails } from "../../static/collegeDetails.mjs";
 import { whatsappLinks } from "../../static/adminData.mjs";
+import { readFileSync } from "fs";
+import path from "path";
+
+const __dirname = path.resolve();
 
 function createRegistrationsController(
   eventsServices,
@@ -308,7 +312,46 @@ function createRegistrationsController(
 
       console.log('starting job to send mails');
       
-      return res.json('mails sent successfully');
+      // const preprocessData = (results) => {
+      //   const projects = results.projects;
+      //   const credentials = results.credentials;
+      //   const judges = JSON.parse(readFileSync(path.join(__dirname, 'judges.json')));
+      //   const slotsData = getJudgingSlots('concepts');
+      //   const data = [];
+
+      //   const processProjectName = (pname) => {
+      //     const temp = pname.replace('-', '').replace('P', '').replace(' ', '');
+      //     return temp;
+      //   }
+    
+      //   judges.forEach((judge) => {
+      //     if(judge.email){
+      //       const temp = {
+      //         judge_id: judge.judge_id,
+      //         name: judge.name?.split(' ')[0] || 'Sir/Mam',
+      //         email: judge.email,
+      //         projects: judge.projects.map((project) => {
+      //           return projects.find((p) => p.pid == `CO-${processProjectName(project)}`)
+      //         }),
+      //         password: credentials.find((item) => item.username == judge.email)?.password || 'Contact Admin',
+      //         slots: JSON.parse(judge.slots)
+      //         .map(slot => parseInt(slot))
+      //         .sort((a, b) => a - b)
+      //         .map(slot => slotsData[slot])
+      //         .join(", "),
+      //       }
+      //       data.push(temp);
+      //     }
+      //   })
+    
+      //   return data;
+      // }
+
+      // const data = preprocessData(results);
+
+      // emailService.sendBulkEmail(data);
+
+      return res.json('mail sent successfully');
     } catch (error) {
       next(error);
     }
