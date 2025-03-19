@@ -1,0 +1,120 @@
+[
+    {
+        "judge_id":"CO-J607b8cd",
+        "name":"Saket Kumar",
+        "email":"Saket.Kumar@accelya.com",
+        "slots":"[\"1\"]",
+        "projects":[
+            "OT0075",
+            "OT1077",
+            "ML0152",
+            "ML0157"
+        ]
+    },
+    {
+        "judge_id":"CO-Jbed7fa1",
+        "name":"Sachin S Nimbalkar",
+        "email":"info@sachinnimbalkar.com",
+        "slots":"[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\"]",
+        "projects":[
+            "AD1076",
+            "AD1093"
+        ]
+    },
+    {
+        "judge_id":"CO-Jfa24705",
+        "name":"Atul Munde",
+        "email":"atul.munde@intangles.com",
+        "slots":"[\"2\"]",
+        "projects":[
+            "OT1079",
+            "OT1081"
+        ]
+    },
+    {
+        "judge_id":"CO-Jbed7fa1",
+        "name":"Sachin S Nimbalkar",
+        "email":"info@sachinnimbalkar.com",
+        "slots":"[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\"]",
+        "projects":[
+            "AD1097",
+            "ML1163",
+            "ML1164",
+            "ML1167"
+        ]
+    },
+    {
+        "judge_id":"CO-J364cfdf",
+        "name":"Savyasachi Dhurve",
+        "email":"savyasachi.dhurve@intangles.com",
+        "slots":"[\"2\"]",
+        "projects":[
+            "CN1028",
+            "CN1029",
+            "AD1048",
+            "AD1050",
+            "OT1066",
+            "DS0002"
+        ]
+    },
+    {
+        "judge_id":"CO-Jfa24705",
+        "name":"Atul Munde",
+        "email":"atul.munde@intangles.com",
+        "slots":"[\"2\"]",
+        "projects":[
+            "AD0087",
+            "OT1082",
+            "OT1087",
+            "DS0002"
+        ]
+    },
+    {
+        "judge_id":"CO-J65d0547",
+        "name":"Dr.Manish Bali",
+        "email":"balimanish0@gmail.com",
+        "slots":"[\"2\"]",
+        "projects":[
+            "ML1168",
+            "ML1177",
+            "ML1174",
+            "DS0002"
+        ]
+    },
+    {
+        "judge_id":"CO-J62999a8",
+        "name":"Tanmay Bhatt",
+        "email":"tanmaybhatt.iet@gmail.com",
+        "slots":"[\"3\"]",
+        "projects":[
+            "AD0094",
+            "OT1088",
+            "OT1100",
+            "DS1004"
+        ]
+    },
+    {
+        "judge_id":"CO-Jbed7fa1",
+        "name":"Sachin S Nimbalkar",
+        "email":"info@sachinnimbalkar.com",
+        "slots":"[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\"]",
+        "projects":[
+            "ML1178",
+            "ML1200",
+            "ML1201"
+        ]
+    },
+    {
+        "judge_id":"CO-J364cfdf",
+        "name":"Savyasachi Dhurve",
+        "email":"savyasachi.dhurve@intangles.com",
+        "slots":"[\"2\",\"3\"]",
+        "projects":[
+            "CN1026",
+            "CN1027",
+            "CN0020",
+            "AD1075",
+            "DS1005"
+        ]
+    }
+]

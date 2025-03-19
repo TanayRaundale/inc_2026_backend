@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INC 25 - Impetus Judge Allocation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h2 {
+            text-align: center;
+            color: #d4621c;
+        }
+        .info-box {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #5F9DF7;
+            color: white;
+        }
+        .contact p {
+            margin: 5px 0;
+        }
+        .login-button {
+            display: block;
+            text-align: center;
+            background-color: #5F9DF7;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>You're Invited to Judge INC 25 - Impetus</h2>
+        <p>Dear <%= data.name %>,</p>
+        <p>We sincerely appreciate your participation as a Judge for Impetus 2025. Your expertise and insights are crucial in evaluating the <strong>Impetus</strong> projects, as a part of <strong>INC 25</strong>.</p>
+
+        <div class="info-box">
+            <p><strong>Event:</strong> Impetus</p>
+            <p><strong>Judge ID:</strong> <%= data.judge_id %></p>
+            <p><strong>Date & Time Slots:</strong> <span style="color: #d4621c;"><strong><%= data.slots %></strong></span></p>
+            <p><strong>Mode:</strong> Offline</p>
+            <p><strong>Location:</strong> PICT, Pune</p>
+        </div>
+
+        <h3 style="color: #d4621c;">Allocated Projects</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PID</th>
+                    <th>Title</th>
+                    <th>Domain</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.projects.forEach(function(project) { %>
+                <tr>
+                    <td><%= project.pid %></td>
+                    <td><%= project.title %></td>
+                    <td><%= project.domain %></td>
+                    <td><%= project.project_type %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+        <p>We also request you to kindly provide your honest feedback after completing the evaluation.</p>
+
+        <h3 style="color: #d4621c;">Contact Information</h3>
+        <div class="contact">
+            <p>Madhura Pawar – <a href="tel:+918806809022">+91 88068 09022</a></p>
+            <p>Arpita Bhandari – <a href="tel:+919518799980">+91 95187 99980</a></p>
+        </div>
+
+        <p>We are excited to have you on board and look forward to your valuable contributions.</p>
+
+        <div class="footer">
+            © PICT INC 2025. All rights reserved | PICT, Pune - 411043 | India
+        </div>
+    </div>
+</body>
+</html>
