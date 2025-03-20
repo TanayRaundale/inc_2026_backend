@@ -20,6 +20,7 @@ function createAllocationsRouter(emailServices, allocationServices, eventsServic
 
     // get projects allocated to judges
     allocationsRouter.get("/projects/:jid", getAllocatedProjectsofJudge)
+    
     allocationsRouter.get("/getevalstats/:event_name", verifyAdminLogin, getEvalstats);
 
     return allocationsRouter

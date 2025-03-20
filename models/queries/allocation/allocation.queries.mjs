@@ -8,9 +8,9 @@ function allocationQueries() {
   const allocate = (event_name, pids, jids, slots) => {
     let placeholders = ''
     slots = slots.map(slot => `"${slot}"`)
-    for (let i = 1; i < pids.length; i++) placeholders += `, ('${pids[i]}', '${jids[0]}',  '', '[${slots}]', CURRENT_TIMESTAMP(), '${event_name}')`
+    for (let i = 1; i < pids.length; i++) placeholders += `, ('${pids[i]}', '${jids[0]}',  '[${slots}]', '', '${event_name}')`
     placeholders = jids.length === 1 && pids.length === 1 ? '' : placeholders
-    return `INSERT INTO allocations VALUES ('${pids[0]}', '${jids[0]}', '', '[${slots}]', CURRENT_TIMESTAMP(), '${event_name}')${placeholders};`
+    return `INSERT INTO allocations VALUES ('${pids[0]}', '${jids[0]}', '[${slots}]', '', '${event_name}')${placeholders};`
   }
 
   const deallocate = (event_name, pids, jids) => {
