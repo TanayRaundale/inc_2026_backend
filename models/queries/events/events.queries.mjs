@@ -46,8 +46,7 @@ function eventsQueries(tableName) {
     'CO-ML1243', 'CO-ML1247', 'CO-ML1253', 'CO-ML1255', 'CO-ML1258',
     'CO-ML1259', 'CO-ML1272', 'CO-OT0065', 'CO-OT0067', 'CO-OT1125',
     'CO-OT0069', 'CO-OT0119', 'CO-AD0047', 'CO-AD0045', 'CO-AD0056',
-    'CO-OT0122', 'CO-OT0078', 'CO-OT0080', 'CO-OT0085', 'CO-OT0086',
-    'CO-AD0067', 'CO-ML1280'
+    'CO-OT0122', 'CO-OT0078', 'CO-OT0080', 'CO-OT0085', 'CO-OT0086', 'CO-ML1280'
     );`
 
     const getProjectsByTeamIds = (data, team_ids) => `SELECT title, ${data}_projects.pid ,  abstract , domain, mode FROM ${data}_projects INNER JOIN ${data}_group_info ON ${data}_projects.pid = ${data}_group_info.pid WHERE ${data}_projects.pid IN (${team_ids});`

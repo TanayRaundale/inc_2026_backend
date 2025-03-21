@@ -105,14 +105,15 @@ function emailService() {
 			const executeSendMail = async (emailArray) => {
 				const allEmailPromises = emailArray.map(async (item) => {
 					const mailOptions = {
-						from: `InC 2025 <${officialEmails.get('info')}>`,
+						from: `InC 2025 <${officialEmails.get('queries')}>`,
 						to: `${item.email}`,
-						cc: `InC Judging <${officialEmails.get('judging')}>`,
-						replyTo: `InC Queries <${officialEmails.get('queries')}>`,
-						subject: "Project Allocation for INC 25 - Concepts",
+						cc: `InC Info <${officialEmails.get('info')}>`,
+						// replyTo: `InC Queries <${officialEmails.get('queries')}>`,
+						subject: "Pradnya First Round Link",
 						priority: 'high',
-						text: "Email content",
-						html: await emailTemplates.sendAllocationEmail(item),
+						// text: "Email content",
+						text: 'Dear Participant,\nHere is the link for your first round of Pradnya:\n Junior Category:https://forms.gle/8GF3mS2hun96rtCD8 \n Senior Category:https://forms.gle/Q3bb5mvrhqpnyStj8 \n',
+						// html: await emailTemplates.sendAllocationEmail(item),
 					};
 					return bulkEmailTransporter.sendMail(mailOptions)
 						.then(() => console.log(`Mail sent - ${item.email}`))

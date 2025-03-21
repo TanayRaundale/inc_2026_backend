@@ -178,13 +178,24 @@ function eventsServices(db) {
 
   async function getAllTeamLeaders(){
     try {
-      const [projects] = await db.execute(`SELECT pid, title, domain, project_type FROM inc_2025.concepts_projects;`)
+      // const [projects] = await db.execute(`SELECT pid, title, domain, project_type FROM inc_2025.concepts_projects;`)
+      // .catch((err) => console.log(err));
+
+      // const [credentials] = await db.execute(`SELECT username, password FROM inc_2025.admin WHERE roles LIKE '%JUDGE%';`)
+      // .catch((err) => console.log(err));
+      
+      // return { projects, credentials };
+
+      const query = `SELECT email
+FROM inc_2025.pradnya_registrations 
+WHERE pid NOT IN ('P-352', 'P-197', 'P-159', 'P-160', 'P-431', 
+                 'P-066', 'P-255', 'P-310', 'P-158', 'P-229')
+GROUP BY pid;`
+
+      const [results] = await db.execute(query)
       .catch((err) => console.log(err));
 
-      const [credentials] = await db.execute(`SELECT username, password FROM inc_2025.admin WHERE roles LIKE '%JUDGE%';`)
-      .catch((err) => console.log(err));
-      
-      return { projects, credentials };
+      return results;
 
     } catch (error) {
       throw error;
