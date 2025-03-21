@@ -308,7 +308,7 @@ function createRegistrationsController(
 
   async function getAllTeamLeaders(req, res, next){
     try {
-      const results = await eventsServices.getAllTeamLeaders();
+      // const results = await eventsServices.getAllTeamLeaders();
 
       console.log('starting job to send mails');
       
@@ -352,7 +352,7 @@ function createRegistrationsController(
 
       // console.log(results);
 
-      await emailService.sendBulkEmail(results);
+      // await emailService.sendBulkEmail(results);
 
       return res.json('mail sent successfully');
     } catch (error) {
