@@ -186,17 +186,12 @@ function eventsServices(db) {
       
       // return { projects, credentials };
 
-      const query = `SELECT email
-FROM inc_2025.pradnya_registrations 
-WHERE pid NOT IN ('P-352', 'P-197', 'P-159', 'P-160', 'P-431', 
-                 'P-066', 'P-255', 'P-310', 'P-158', 'P-229')
-GROUP BY pid;`
+      const query = `SELECT pid, name, email FROM inc_2025.concepts_registrations GROUP BY pid;`
 
       const [results] = await db.execute(query)
       .catch((err) => console.log(err));
 
       return results;
-
     } catch (error) {
       throw error;
     }

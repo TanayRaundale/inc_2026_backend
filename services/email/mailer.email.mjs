@@ -27,8 +27,8 @@ function emailService() {
 		maxMessages: Infinity,
 		maxConnections: 5,
 		auth: {
-			user: officialEmails.get('queries'),
-			pass: env.EVENTS_EMAIL_PASSWORD
+			user: officialEmails.get('info'),
+			pass: env.INFO_EMAIL_PASSWORD
 		},
 		tls: {
 			rejectUnauthorized: false
@@ -105,15 +105,60 @@ function emailService() {
 			const executeSendMail = async (emailArray) => {
 				const allEmailPromises = emailArray.map(async (item) => {
 					const mailOptions = {
-						from: `InC 2025 <${officialEmails.get('queries')}>`,
+						from: `InC 2025 <${officialEmails.get('info')}>`,
 						to: `${item.email}`,
-						cc: `InC Info <${officialEmails.get('info')}>`,
-						// replyTo: `InC Queries <${officialEmails.get('queries')}>`,
-						subject: "Pradnya First Round Link",
+						cc: `InC Judging <${officialEmails.get('judging')}>`,
+						replyTo: `InC Queries <${officialEmails.get('queries')}>`,
+						subject: "Invitation to Judge for PICT INC - Concepts",
 						priority: 'high',
-						// text: "Email content",
-						text: 'Dear Participant,\nHere is the link for your first round of Pradnya:\n Junior Category:https://forms.gle/8GF3mS2hun96rtCD8 \n Senior Category:https://forms.gle/Q3bb5mvrhqpnyStj8 \n',
+						text: "Email content",
 						// html: await emailTemplates.sendAllocationEmail(item),
+						html: `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation to Judge - Concepts</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0;">
+    <table width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <tr>
+            <td style="background-color: #d4621c; padding: 20px; text-align: center; color: #ffffff; font-size: 24px; font-weight: bold;">
+                Invitation to Judge - Concepts
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px; color: #333333;">
+                <p>Dear ${item.name},</p>
+                <p>We are honored to invite you to be a judge at <strong>Concepts</strong>, The Premier Project Exhibition showcasing Innovation and Achievement.</p>
+                <p>Your expertise and insights will be invaluable in evaluating the exceptional projects presented by talented participants.</p>
+                <p><strong>Event Details:</strong></p>
+                <ul>
+                    <li><strong>Event:</strong> Concepts - Project Exhibition</li>
+                    <li><strong>Date:</strong> March 22, 2025</li>
+                    <li><strong>Location:</strong> PICT, Pune</li>
+                </ul>
+                <p>We would be delighted to have you as a judge and contribute to this exciting event.</p>
+                <p style="text-align: center; margin: 20px 0;">
+                    <a href="https://pictinc.org/register/judge/concepts?URLAccessCode=d492d21ae9cd3fa" 
+                       style="background-color: #5F9DF7; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;">
+                        Register as a Judge
+                    </a>
+                </p>
+                <p>If you have any questions, feel free to reach out. We look forward to your participation!</p>
+                <p>Best regards,</p>
+                <p><strong>PICT Inc Team</strong></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: #5F9DF7; padding: 10px; text-align: center; color: #ffffff; font-size: 14px;">
+                &copy; 2025 PICT Inc. All Rights Reserved.
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+`
 					};
 					return bulkEmailTransporter.sendMail(mailOptions)
 						.then(() => console.log(`Mail sent - ${item.email}`))
