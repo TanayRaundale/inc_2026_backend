@@ -62,46 +62,37 @@ function getRegistrationsController(
         }))
         return teams;
       }
-
-      const presentIds = [
-        'CO-OT0063', 'CO-OT0105', 'CO-OT0117', 'CO-OT1102', 'CO-OT1107', 'CO-OT1106', 'CO-OT0099', 'CO-OT1125', 'CO-OT1100', 'CO-OT1084', 'CO-OT0068', 'CO-OT0075', 'CO-OT0085', 'CO-OT0091', 'CO-OT0094', 'CO-OT0097', 'CO-OT0125', 'CO-OT1088', 'CO-OT0080', 'CO-OT0093', 'CO-OT0120', 'CO-OT1089', 'CO-OT0123', 'CO-OT1066', 'CO-OT1082', 'CO-OT1096', 'CO-ML1149',  'CO-ML1226',  'CO-ML0250',  'CO-ML0279',  'CO-ML1208',  'CO-ML0147',  'CO-ML1207',  'CO-ML1146',  'CO-ML1224',  'CO-ML1158',  'CO-ML1201',  'CO-ML1264',  'CO-ML1148',  'CO-ML0157', 'CO-ML1269',  'CO-ML1198',  'CO-ML0145',  'CO-ML1187',  'CO-ML1256',  'CO-ML1248',  'CO-ML1216',  'CO-ML1162',  'CO-ML1278',  'CO-ML1141',  'CO-ML1222',  'CO-ML1243',  'CO-ML1225',  'CO-ML1268',  'CO-ML1164',  'CO-ML1163',  'CO-ML0279',  'CO-ML1234',  'CO-ML0152',  'CO-ML1200',  'CO-ML1261',  'CO-ML1271',  'CO-ML1168',  'CO-ML1161',  'CO-ML0170',  'CO-ML1154',  'CO-ML0170',  'CO-ML1154',  'CO-AD0067', 'CO-AD1052', 'CO-AD1098', 'CO-AD0053', 'CO-AD0100', 'CO-AD0044', 'CO-AD0077', 'CO-AD0094', 'CO-AD1046', 'CO-AD1049', 'CO-AD1050', 'CO-AD1054', 'CO-AD1080', 'CO-AD1085', 'CO-AD0043', 'CO-AD0066', 'CO-AD0081', 'CO-AD0082', 'CO-AD1063', 'CO-AD1064', 'CO-AD1092', 'CO-AD1074', 'CO-CN1022', 'CO-CN1034', 'CO-CN0020', 'CO-CN1040', 'CO-CN1027', 'CO-CN1028', 'CO-CN1038', 'CO-ES1009', 'CO-ES1010', 'CO-ES1011', 'CO-ES1012', 'CO-ES1013', 'CO-ES1022', 'CO-ES1024', 'CO-ES1037', 'CO-ES0032', 'CO-ES0035', 'CO-ES0036', 'CO-DS1060', 'CO-DS1004', 'CO-DS1040', 'CO-DS1059', 'CO-DS0003', 'CO-DS0044', 'CO-DS1005', 'CO-DS1042', 'CO-DS0035', 'CO-DS1007', 'CO-DS1061', 'CO-DS0002', 'CO-DS1057'
-      ]
       
-      const filteredResults = [];
-
-      results.forEach((item, index) => {
-        if(presentIds.includes(item.pid)){
-          const temp = {id: index,
-          pid: item.pid,
-          judges_count: item.judges_count || 0,
-          evaluations: item.evaluations || "N/A",
-          judging_within_allocations: item.judging_within_allocations || 0,
-          projectDetails: {
-            title: item.title,
-            abstract: item.abstract,
-            project_type: item.project_type,
-            sponsored: item.sponsored,
-            company: item.company,
-            nda: item.nda,
-            domain: item.domain,
-            guide_name: item.guide_name,
-            guide_email: item.guide_email,
-            guide_phone: item.guide_phone,
-            hod_email: item.hod_email,
-            techfiesta: item.techfiesta,
-          },
-          teamDetails: processTeams(item.name, item.email, item.phone),
-          collegeDetails: {
-            college: item.college,
-            year: item.year,
-            city: item.city,
-            district: item.district,
-            locality: item.locality,
-            mode: item.mode,
-          },
-          paymentId: item.payment_id,
-          }
-          filteredResults.push(temp);
+      const filteredResults = results.map((item, index) => {
+        return {id: index,
+        pid: item.pid,
+        judges_count: item.judges_count || 0,
+        evaluations: item.evaluations || "N/A",
+        judging_within_allocations: item.judging_within_allocations || 0,
+        projectDetails: {
+          title: item.title,
+          abstract: item.abstract,
+          project_type: item.project_type,
+          sponsored: item.sponsored,
+          company: item.company,
+          nda: item.nda,
+          domain: item.domain,
+          guide_name: item.guide_name,
+          guide_email: item.guide_email,
+          guide_phone: item.guide_phone,
+          hod_email: item.hod_email,
+          techfiesta: item.techfiesta,
+        },
+        teamDetails: processTeams(item.name, item.email, item.phone),
+        collegeDetails: {
+          college: item.college,
+          year: item.year,
+          city: item.city,
+          district: item.district,
+          locality: item.locality,
+          mode: item.mode,
+        },
+        paymentId: item.payment_id,
         }
       })
       res.status(302).json(filteredResults);
