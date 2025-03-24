@@ -310,23 +310,7 @@ function createRegistrationsController(
     try {
       // const results = await eventsServices.getAllTeamLeaders();
 
-      const results = [
-        { "name": "Varun", "email": "varunw@fold.health" },
-        { "name": "Bhavesh", "email": "bhaveshp@fold.health" },
-        { "name": "Vaibhav", "email": "vaibhavr@fold.health" },
-        { "name": "Prasad", "email": "prasadt@fold.health" },
-        { "name": "Swapnil", "email": "swapniln@fold.health" },
-        { "name": "Sreenivas", "email": "sreenivasd@fold.health" },
-        { "name": "Sunny", "email": "sunnyb@fold.health" },
-        { "name": "Rohit", "email": "rohits@fold.health" },
-        { "name": "Nilesh", "email": "nileshk@fold.health" },
-        { "name": "Amar", "email": "amarj@fold.health" },
-        { "name": "Sanket", "email": "sanketc@fold.health" },
-        { "name": "Umesh", "email": "umeshs@fold.health" }
-      ]
-      
-
-      console.log('starting job to send mails');
+      // console.log('starting job to send mails');
       
       // const preprocessData = (results) => {
       //   const projects = results.projects;
@@ -365,6 +349,8 @@ function createRegistrationsController(
       // const data = preprocessData(results);
 
       // await emailService.sendBulkEmail(data);
+
+      // await emailService.sendBulkEmail(results);
 
       // await emailService.sendBulkEmail(results);
 

@@ -186,7 +186,33 @@ function eventsServices(db) {
       
       // return { projects, credentials };
 
-      const query = `SELECT pid, name, email FROM inc_2025.concepts_registrations GROUP BY pid;`
+      const query = `SELECT GROUP_CONCAT(email) AS email FROM inc_2025.concepts_registrations WHERE pid IN (
+'CO-OT1118',
+'CO-OT1089',
+'CO-OT1096',
+'CO-ML1177',
+'CO-ML1208',
+'CO-ML0151',
+'CO-AD1080',
+'CO-AD0047',
+'CO-AD1085',
+'CO-DS0044',
+'CO-DS1060',
+'CO-DS1007',
+'CO-ES1037',
+'CO-ES1012',
+'CO-ES1024',
+'CO-CN1040',
+'CO-CN1028',
+'CO-CN0024',
+'CO-DS0002',
+'CO-ES1010',
+'CO-ES1011',
+'CO-AD1092',
+'CO-DS0035',
+'CO-OT0114',
+'CO-OT0123'
+) GROUP BY pid;`
 
       const [results] = await db.execute(query)
       .catch((err) => console.log(err));

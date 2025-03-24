@@ -109,7 +109,7 @@ function emailService() {
 						to: `${item.email}`,
 						cc: `InC Judging <${officialEmails.get('judging')}>`,
 						replyTo: `InC Queries <${officialEmails.get('queries')}>`,
-						subject: "Invitation to Judge for PICT INC - Concepts",
+						subject: "Urgent - InC 2025: Bank Details of Winners (submit before March 23, 10pm)",
 						priority: 'high',
 						text: "Email content",
 						// html: await emailTemplates.sendAllocationEmail(item),
@@ -117,48 +117,42 @@ function emailService() {
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation to Judge - Concepts</title>
+    <title>InC 2025 - Prize Winner Bank Details Submission</title>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0;">
-    <table width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <tr>
-            <td style="background-color: #d4621c; padding: 20px; text-align: center; color: #ffffff; font-size: 24px; font-weight: bold;">
-                Invitation to Judge - Concepts
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 20px; color: #333333;">
-                <p>Dear ${item.name},</p>
-                <p>We are honored to invite you to be a judge at <strong>Concepts</strong>, The Premier Project Exhibition showcasing Innovation and Achievement.</p>
-                <p>Your expertise and insights will be invaluable in evaluating the exceptional projects presented by talented participants.</p>
-                <p><strong>Event Details:</strong></p>
-                <ul>
-                    <li><strong>Event:</strong> Concepts - Project Exhibition</li>
-                    <li><strong>Date:</strong> March 22, 2025</li>
-                    <li><strong>Location:</strong> PICT, Pune</li>
-                </ul>
-                <p>We would be delighted to have you as a judge and contribute to this exciting event.</p>
-                <p style="text-align: center; margin: 20px 0;">
-                    <a href="https://pictinc.org/register/judge/concepts?URLAccessCode=d492d21ae9cd3fa" 
-                       style="background-color: #5F9DF7; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 16px;">
-                        Register as a Judge
-                    </a>
-                </p>
-                <p>If you have any questions, feel free to reach out. We look forward to your participation!</p>
-                <p>Best regards,</p>
-                <p><strong>PICT Inc Team</strong></p>
-            </td>
-        </tr>
-        <tr>
-            <td style="background-color: #5F9DF7; padding: 10px; text-align: center; color: #ffffff; font-size: 14px;">
-                &copy; 2025 PICT Inc. All Rights Reserved.
-            </td>
-        </tr>
-    </table>
+<body style="font-family: Arial, sans-serif; line-height: 1.6;">
+    <p>Dear Winners,</p>
+    <p>Greetings!</p>
+    <p>You are kindly requested to share the Bank details for prize of Concepts 2025 between <strong>23 March 2025 evening</strong> (after declaration of results in the valedictory session) up to <strong>10:00 PM on 23 March 2025</strong>, in the Google Form given below.</p>
+
+    <p><strong>InC 25 - Google Form Link:</strong> <a href="https://forms.gle/6bQUssXhmvLrNd7c7" target="_blank">Click Here to Submit Details</a></p>
+    
+    <p><strong>Note:</strong></p>
+    <ol>
+        <li>This form is to be filled by winners only and not by all participants. Only <strong>one student from the winning group</strong> should submit the bank account details. The total prize amount of the group will be credited to his/her bank account.</li>
+        <li>The bank account should be in the name of the student and not parents/friends.</li>
+        <li>Names of prize winners and Google Form details will be verified before submission to the accounts department.</li>
+        <li>Please inform all participating students to keep their bank account details ready (details of one student from each group) so that after the announcement of results, the winner students can submit the details immediately.</li>
+    </ol>
+    
+    <p><strong>Bank Account Details Required:</strong></p>
+    <ul>
+        <li>Name of Account Holder as per bank records</li>
+        <li>Bank Account Number</li>
+        <li>Type of Account (Saving/Current)</li>
+        <li>Bank & Branch Address</li>
+        <li>IFSC Code</li>
+        <li>Scanned copy of the first page of passbook/cancelled cheque in PDF format</li>
+    </ul>
+    
+    <p>For any queries, please contact:</p>
+    <p><strong>Dr. A. R. Deshpande:</strong> <a href="tel:9860487525">9860487525</a> (Finance Committee)</p>
+    <p><strong>Dr. S. B. Deshmukh:</strong> <a href="tel:7709602019">7709602019</a> (Concepts Faculty)</p>
+    
+    <p>Thanks & Regards,</p>
+    <p><strong>InC Team 2025</strong></p>
 </body>
 </html>
-`
+`,
 					};
 					return bulkEmailTransporter.sendMail(mailOptions)
 						.then(() => console.log(`Mail sent - ${item.email}`))
