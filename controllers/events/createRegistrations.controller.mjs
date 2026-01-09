@@ -61,7 +61,7 @@ function createRegistrationsController(
           step_2: [{ ...req.body }],
           step_no: 2,
         });
-        // IMP
+        // IMPs
         if (member_id_file) await filesServices.insertFile(email, member_id_file);
         res.status(201).json({ success: true, ticket }).end();
         return;
