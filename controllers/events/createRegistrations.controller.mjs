@@ -211,6 +211,7 @@ function createRegistrationsController(
         }
         req.body = { ...req.body, team_id: team_id || '' };
         try {
+          console.log("HELLO  i am here before saveregistration");
           await eventsServices.saveRegistrationDetails({ ...req.body, ticket, event }, 4);
            console.log("✅ SAVE SUCCESS step4");
         } catch (e) {
