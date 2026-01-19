@@ -183,22 +183,30 @@ function createRegistrationsController(
       const { event, ticket } = req.query;
 
       let results = await eventsServices.getTicketDetails(ticket);
-   
-      if (!results) throw new AppError(404, "fail", "Ticket does not exist");
-
- 
-      console.log("results:", results);
+       console.log("results:", results);
 console.log("results length:", results?.length);
 console.log("first row:", results?.[0]);
 console.log("payment id:", results?.[0]?.payment_id);
+      results = results?.[0];
+
+      if (!results) throw new AppError(404, "fail", "Ticket does not exist");
+
+ 
+     
 
 
-      if (results.payment_id !== "")  
-        throw new AppError(
-          400,
-          "fail",
-          "Registration done using this ticket and payment under verification"
-        );
+      // if (results.payment_id !== "")  
+      //   throw new AppError(
+      //     400,
+      //     "fail",
+      //     "Registration done using this ticket and payment under verification"
+      //   );
+      if ((results.payment_id ?? "").trim() !== "")
+  throw new AppError(
+    400,
+    "fail",
+    "Registration done using this ticket and payment under verification"
+  );
       else if (results.step_no === 3) {
         const { isPICT, isInternational } = results.step_3;
         const { techfiesta, team_id } = results.step_1;
