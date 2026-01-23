@@ -10,6 +10,7 @@ function emailService() {
 	const eventEmailTransporter = nodemailer.createTransport({
 		pool: true,
 		service: 'gmail',
+		secure:true, //changes made here 
 		port: 465,
 		auth: {
 			user: officialEmails.get('info'),
