@@ -11,7 +11,7 @@ function emailService() {
 		pool: true,
 		service: 'gmail',
 		secure:true, //changes made here 
-		port: 465,
+		port: 587,
 		auth: {
 			user: officialEmails.get('info'),
 			pass: env.INFO_EMAIL_PASSWORD
@@ -23,7 +23,7 @@ function emailService() {
 
 	const bulkEmailTransporter = nodemailer.createTransport({
 		service: 'gmail',
-		port: 465,
+		port: 587,
 		pool: true,
 		maxMessages: Infinity,
 		maxConnections: 5,
@@ -39,7 +39,7 @@ function emailService() {
 	const judgingEmailTransporter = nodemailer.createTransport({
 		pool: true,
 		service: 'gmail',
-		port: 465,
+		port: 587,
 		auth: {
 			user: officialEmails.get('judging'),
 			pass: env.JUDGE_EMAIL_PASSWORD
