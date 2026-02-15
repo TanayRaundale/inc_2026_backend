@@ -1,8 +1,17 @@
 resource "aws_instance" "node_app" {
-  ami                    = "ami-0f5ee92e2d63afc18" # Ubuntu 22.04
+  ami                    = "ami-0f5ee92e2d63afc18" # Ubuntu 22.04 official
   instance_type          = var.instance_type
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.node_sg.id]
+
+  # -------------------------------
+  # Root volume
+  # -------------------------------
+  root_block_device {
+    volume_type           = "gp3"
+    volume_size           = 30
+    delete_on_termination = true
+  }
 
   tags = {
     Name = var.app_name
@@ -13,63 +22,45 @@ resource "aws_instance" "node_app" {
     user        = "ubuntu"
     private_key = file(var.private_key_path)
     host        = self.public_ip
+    timeout     = "10m"
   }
 
   # -------------------------------
-  # 1️. Create app directory FIRST
+  # Single remote-exec provisioner
   # -------------------------------
   provisioner "remote-exec" {
-    inline = [
-      "echo 'Waiting for cloud-init to finish...'",
-      "cloud-init status --wait",
-      "sudo mkdir -p /home/ubuntu/app",
-      "sudo chown -R ubuntu:ubuntu /home/ubuntu/app"
-    ]
-  }
+  inline = [
+    "echo 'Waiting for cloud-init to finish...'",
+    "cloud-init status --wait || echo 'Cloud-init timeout, continuing...'",
 
-  # -------------------------------
-  # 2️. Copy .env file AFTER folder exists
-  # -------------------------------
-  provisioner "file" {
-    source      = var.local_env_path
-    destination = "/home/ubuntu/app/.env.dev"
-  }
+    "echo 'Creating app and temp directories...'",
+    "mkdir -p /home/ubuntu/app /home/ubuntu/temp_env",
+    "chown -R ubuntu:ubuntu /home/ubuntu/app /home/ubuntu/temp_env",
 
-  # -------------------------------
-  # 3️. Install Node + deploy app
-  # -------------------------------
-  provisioner "remote-exec" {
-    inline = [
-      # HARD disable interactive prompts
-      "export DEBIAN_FRONTEND=noninteractive",
-      "sudo systemctl stop unattended-upgrades || true",
-      "sudo systemctl disable unattended-upgrades || true",
-      "sudo sed -i 's/^Prompt=.*/Prompt=never/' /etc/update-manager/release-upgrades",
+    "echo 'Writing .env to temporary folder...'",
+    "cat <<EOF > /home/ubuntu/temp_env/.env.dev",
+    "${file(var.local_env_path)}",
+    "EOF",
 
-      # Update ONLY
-      "sudo apt-get update -y",
+    "echo 'Cloning repo into app folder...'",
+    "cd /home/ubuntu/app",
+    "rm -rf ./* ./.??*",
+    "git clone ${var.repo_url} .",
+    "cp /home/ubuntu/temp_env/.env.dev /home/ubuntu/app/.env.dev",
 
-      # Node.js 20
-      "curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -",
-      "sudo apt-get install -y nodejs git build-essential",
+    "echo 'Installing Node.js, git, and PM2...'",
+    "curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -",
+    "sudo apt-get update -y",
+    "sudo apt-get install -y nodejs git",
+    "sudo npm install -g pm2",
 
-      # PM2
-      "sudo npm install -g pm2",
+    "echo 'Installing app dependencies and starting app...'",
+    "cd /home/ubuntu/app",
+    "npm install --no-audit --no-fund --progress=false",
+    "pm2 delete ${var.app_name} || true",
+    "pm2 start index.js --name ${var.app_name}",
+    "pm2 save"
+  ]
+}
 
-      # Safety: remove any old files including hidden dotfiles
-      "cd /home/ubuntu/app",
-      "sudo rm -rf ./* ./.??*",
-
-      # Clone repo fresh
-      "git clone ${var.repo_url} .",
-
-      # Install app dependencies
-      "npm install --no-audit --no-fund --progress=false",
-
-      # Run app with PM2
-      "pm2 delete ${var.app_name} || true",
-      "pm2 start index.js --name ${var.app_name}",
-      "pm2 save"
-    ]
-  }
 }
