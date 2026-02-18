@@ -64,3 +64,17 @@ resource "aws_instance" "node_app" {
 }
 
 }
+
+  # 1. Allocate Elastic IP
+resource "aws_eip" "node_app_eip" {
+  depends_on = [aws_instance.node_app] 
+}
+
+# 2. Associate Elastic IP with your EC2
+resource "aws_eip_association" "node_app_eip_assoc" {
+  instance_id   = aws_instance.node_app.id
+  allocation_id = aws_eip.node_app_eip.id
+}
+
+
+
