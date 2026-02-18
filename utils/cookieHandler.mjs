@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.dev' });
+
 const options = {
     httpOnly: true,
     maxAge: process.env.TOKEN_EXPIRY || 3600000,

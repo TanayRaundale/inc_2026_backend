@@ -1,8 +1,9 @@
 import Jwt from 'jsonwebtoken';
 import AppError from './appError.mjs';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.dev' });
 
 const env = process.env
-
 function createToken(data) {
     try {
         const token = Jwt.sign(

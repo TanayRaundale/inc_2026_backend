@@ -1,4 +1,6 @@
 import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.dev' });
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
