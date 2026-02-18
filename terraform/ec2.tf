@@ -34,19 +34,19 @@ resource "aws_instance" "node_app" {
     "cloud-init status --wait || echo 'Cloud-init timeout, continuing...'",
 
     "echo 'Creating app and temp directories...'",
-    "mkdir -p /home/ubuntu/app /home/ubuntu/temp_env",
-    "chown -R ubuntu:ubuntu /home/ubuntu/app /home/ubuntu/temp_env",
-
-    "echo 'Writing .env to temporary folder...'",
-    "cat <<EOF > /home/ubuntu/temp_env/.env.dev",
-    "${file(var.local_env_path)}",
-    "EOF",
+    "mkdir -p /home/ubuntu/app",
+    "chown -R ubuntu:ubuntu /home/ubuntu/app",
 
     "echo 'Cloning repo into app folder...'",
     "cd /home/ubuntu/app",
     "rm -rf ./* ./.??*",
     "git clone ${var.repo_url} .",
-    "cp /home/ubuntu/temp_env/.env.dev /home/ubuntu/app/.env.dev",
+    "echo 'Writing .env.dev after cloning repo...'",
+    "echo \"${file(var.local_env_path)}\" > /home/ubuntu/app/.env.dev",
+    "if [ ! -s /home/ubuntu/app/.env.dev ]; then echo 'ERROR: .env.dev is missing or empty!' && exit 1; fi",
+    "echo 'DEBUG: .env.dev written successfully:'",
+    "head -n 10 /home/ubuntu/app/.env.dev",
+
 
     "echo 'Installing Node.js, git, and PM2...'",
     "curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -",
