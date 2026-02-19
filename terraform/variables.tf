@@ -28,3 +28,8 @@ variable "app_name" {
 variable "repo_url" {
   default = "https://github.com/TanayRaundale/inc_2026_backend.git"
 }
+
+variable "branch_name" {
+  type    = string
+  default = "INC-Web-Team/Kalyani"
+}

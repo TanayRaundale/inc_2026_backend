@@ -41,11 +41,12 @@ resource "aws_instance" "node_app" {
     "cd /home/ubuntu/app",
     "rm -rf ./* ./.??*",
     "git clone ${var.repo_url} .",
+    "git fetch --all",
+    "git checkout ${var.branch_name} || git checkout -b ${var.branch_name} origin/${var.branch_name}",
     "echo 'Writing .env.dev after cloning repo...'",
     "echo \"${file(var.local_env_path)}\" > /home/ubuntu/app/.env.dev",
     "if [ ! -s /home/ubuntu/app/.env.dev ]; then echo 'ERROR: .env.dev is missing or empty!' && exit 1; fi",
     "echo 'DEBUG: .env.dev written successfully:'",
-    "head -n 10 /home/ubuntu/app/.env.dev",
 
 
     "echo 'Installing Node.js, git, and PM2...'",
