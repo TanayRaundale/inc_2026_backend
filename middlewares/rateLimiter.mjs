@@ -25,7 +25,16 @@ const registrationLimiter = rateLimit({
     }
 })
 
+const healthLimiter = rateLimit({
+    windowMs: 3600 * 1000, // 1 hr
+    max: 10,             // max 10 requests per minute
+    message: { status: 'fail', message: 'Too many requests. Try later.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
 export {
     apiLimiter,
-    registrationLimiter
+    registrationLimiter,
+    healthLimiter
 }
