@@ -12,6 +12,9 @@ import { ticketQueries as _ticketQueries } from './queries/events/tickets/ticket
 import { filesQueries as _filesQueries } from './queries/files/files.queries.mjs';
 import { judgesQueries as _judgesQueries } from './queries/judges/judges.queries.mjs';
 import { allocationQueries as _allocationQueries } from './queries/allocation/allocation.queries.mjs';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.dev' });
 
 const env = process.env
 

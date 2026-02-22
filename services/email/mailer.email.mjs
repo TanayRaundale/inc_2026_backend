@@ -3,6 +3,9 @@ import { officialEmails } from '../../static/adminData.mjs';
 import { getJudgingSlots } from '../../static/eventsData.mjs';
 import emailTemplates from './htmlGenerators.email.mjs';
 import { writeFileSync } from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.dev' });
 
 const env = process.env
 
