@@ -98,3 +98,60 @@ terraform destroy
 ```
 
 
+```markdown
+--- 
+
+## Nginx Configuration
+
+This project also uses **Nginx as a reverse proxy** to route traffic to the Node.js app.  
+
+### Files to include in your Terraform repo
+
+```
+
+nginx/
+├── nginx.conf              # Global Nginx config
+└── api.pictinc.org         # Site-specific config for api.pictinc.org
+
+
+
+- `nginx.conf` → contains global `events` and `http` blocks.
+- `api.pictinc.org` → contains your server blocks for HTTP → HTTPS redirect, proxying `/api` to Node.js, and `/health`.
+
+### Steps to deploy Nginx after SSHing
+
+1. **Copy files to the server**
+
+```bash
+scp -i ~/.ssh/my-keypair.pem -r nginx/ ubuntu@<ec2_public_ip>:/home/ubuntu/
+````
+
+2. **Move files to proper Nginx directories**
+
+```bash
+sudo cp /home/ubuntu/nginx/nginx.conf /etc/nginx/nginx.conf
+sudo cp /home/ubuntu/nginx/api.pictinc.org /etc/nginx/sites-available/
+sudo ln -sf /etc/nginx/sites-available/api.pictinc.org /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default   # remove default if it exists
+```
+
+3. **Test and reload Nginx**
+
+```bash
+sudo nginx -t       # test config
+sudo systemctl restart nginx
+sudo systemctl status nginx
+```
+
+4. **Verify**
+
+```bash
+curl -I https://api.pictinc.org/health
+```
+
+> ✅ If everything is correct, you should see HTTP 200 with `healthy`.
+
+> For CI/CD, allow SSH temporarily and store the following in **GitHub Secrets**: `EC2_HOST`, `EC2_USER`, `EC2_SSH_KEY`.
+
+
+
