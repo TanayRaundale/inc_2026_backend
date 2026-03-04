@@ -308,43 +308,47 @@ function eventsServices(db) {
       switch (event_name) {
         case eventsName[0]:
           switch (step_2.length) {
-            case 1:  // ADD THIS CASE
-      dataArray = [
-        title,
-        domain,
-        project_type,
-        guide_name,
-        guide_email,
-        guide_phone,
-        hod_email,
-        sponsored,
-        company,
-        nda,
-        abstract,
-        demo,
-        reason_of_demo,
-        step_2[0].name,
-        step_2[0].email,
-        step_2[0].phone,
-        step_2[0].gender,
-        college,
-        year,
-        country,
-        state,
-        district,
-        city,
-        locality,
-        mode,
-        reason_of_mode,
-        referral,
-        ticket,
-        payment_id,
-        techfiesta,
-        group_leader_email,
-        tech_group_id,
-        tech_Transaction_id,
-      ];
-      break;
+            
+            case 1:
+  dataArray = [
+    title,
+    domain,
+    project_type,
+    guide_name,
+    guide_email,
+    guide_phone,
+    hod_email,
+    sponsored,
+    company,
+    nda,
+    abstract,
+    mode,
+    reason_of_mode,
+
+    // member 1
+    step_2[0].name,
+    step_2[0].email,
+    step_2[0].phone,
+    step_2[0].gender,
+
+    college,
+    department,
+    group_id,
+    country,
+    state,
+    district,
+    city,
+    locality,
+
+    referral,
+    ticket,
+    payment_id,
+    techfiesta,
+    group_leader_email,
+    tech_group_id,
+    tech_Transaction_id,
+  ];
+  break;
 
             case 2:
               dataArray = [
@@ -535,66 +539,80 @@ function eventsServices(db) {
               break;
          
                case 6:
-      dataArray = [
-        title,
-        domain,
-        project_type,
-        guide_name,
-        guide_email,
-        guide_phone,
-        hod_email,
-        sponsored,
-        company,
-        nda,
-        abstract,
-        demo,
-        reason_of_demo,
-        step_2[0].name,
-        step_2[0].email,
-        step_2[0].phone,
-        step_2[0].gender,
-        step_2[1].name,
-        step_2[1].email,
-        step_2[1].phone,
-        step_2[1].gender,
-        step_2[2].name,
-        step_2[2].email,
-        step_2[2].phone,
-        step_2[2].gender,
-        step_2[3].name,
-        step_2[3].email,
-        step_2[3].phone,
-        step_2[3].gender,
-        step_2[4].name,
-        step_2[4].email,
-        step_2[4].phone,
-        step_2[4].gender,
-        step_2[5].name,
-        step_2[5].email,
-        step_2[5].phone,
-        step_2[5].gender,
-        college,
-        year,
-        country,
-        state,
-        district,
-        city,
-        locality,
-        mode,
-        reason_of_mode,
-        referral,
-        ticket,
-        payment_id,
-        techfiesta,
-        group_leader_email,
-        tech_group_id,
-        tech_Transaction_id,
-      ];
-      break;
+  dataArray = [
+    title,
+    domain,
+    project_type,
+    guide_name,
+    guide_email,
+    guide_phone,
+    hod_email,
+    sponsored,
+    company,
+    nda,
+    abstract,
+    mode,
+    reason_of_mode,
+
+    // member 1
+    step_2[0].name,
+    step_2[0].email,
+    step_2[0].phone,
+    step_2[0].gender,
+
+    // member 2
+    step_2[1].name,
+    step_2[1].email,
+    step_2[1].phone,
+    step_2[1].gender,
+
+    // member 3
+    step_2[2].name,
+    step_2[2].email,
+    step_2[2].phone,
+    step_2[2].gender,
+
+    // member 4
+    step_2[3].name,
+    step_2[3].email,
+    step_2[3].phone,
+    step_2[3].gender,
+
+    // member 5
+    step_2[4].name,
+    step_2[4].email,
+    step_2[4].phone,
+    step_2[4].gender,
+
+    // member 6
+    step_2[5].name,
+    step_2[5].email,
+    step_2[5].phone,
+    step_2[5].gender,
+
+    college,
+    department,
+    group_id,
+    country,
+    state,
+    district,
+    city,
+    locality,
+
+    referral,
+    ticket,
+    payment_id,
+    techfiesta,
+    group_leader_email,
+    tech_group_id,
+    tech_Transaction_id,
+  ];
+  break;
             }
           break;
 
-        case eventsName[1]:
+        
+          case eventsName[1]:
           switch (step_2.length) {
 
              case 1:
