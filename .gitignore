@@ -157,3 +157,5 @@ override.tf.json
 inc2026.pem
 .terraform.lock.hcl
 .terraform
+
+*.txt
