@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - INC-Web-Team/Kalyani # Trigger on push to main branch
+      - fix/judge-registration-emails
 
 jobs:
   deploy:
