@@ -1,35 +1,54 @@
-import { adminQueries, judgesQueries } from '../../../models/index.js';
+import { adminQueries } from '../../../models/index.js';
 import { AppError } from "../../../utils/index.js";
 
 function adminServices(db) {
+  function normalizeRoles(rawRoles) {
+    if (Array.isArray(rawRoles)) return rawRoles;
+    if (typeof rawRoles === 'string') {
+      const trimmed = rawRoles.trim();
+      if (!trimmed) return [];
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (_) {
+        // Fall through to CSV parsing.
+      }
+      return trimmed.split(',').map((role) => role.trim()).filter(Boolean);
+    }
+    return [];
+  }
+
   async function findAdmin(username) {
     try {
-      const [[results]] = await db.execute(adminQueries.findAdmin, [username]).catch(err => { throw new AppError(400, 'fail', err.sqlMessage) })
-      return results[0]
+      const [rows] = await db.execute(adminQueries.findAdmin, [username]);
+      const user = rows?.[0] || null;
+      if (!user) return null;
+      return {
+        ...user,
+        roles: normalizeRoles(user.roles),
+      };
     } catch (err) {
-      throw new AppError(500, 'fail', err)
+      if (err instanceof AppError) throw err;
+      throw new AppError(500, 'fail', err?.sqlMessage || err?.message || String(err));
     }
   }
 
-  async function loginJudge(data) {
+  async function findJudgeByUsername(username) {
     try {
-      const [results] = await db
-        .execute(
-          { sql: judgesQueries.loginJudge, namedPlaceholders: true },
-          data
-        )
-        .catch((err) => {
-          throw new AppError(400, "fail", err.sqlMessage);
-        });
-      return results[0];
+      const [rows] = await db.execute(
+        'SELECT jid FROM judges WHERE LOWER(email) = LOWER(?) LIMIT 1',
+        [username]
+      );
+      return rows?.[0] || null;
     } catch (err) {
-      throw err;
+      if (err instanceof AppError) throw err;
+      throw new AppError(500, 'fail', err?.sqlMessage || err?.message || String(err));
     }
   }
 
   return {
     findAdmin,
-    loginJudge,
+    findJudgeByUsername,
   }
 }
 

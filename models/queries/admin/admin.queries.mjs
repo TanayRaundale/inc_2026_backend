@@ -1,5 +1,6 @@
 function adminQueries(tableName) {
-  const findAdmin = `CALL getAdminInfo(?);`
+  const resolvedTable = tableName || 'admin';
+  const findAdmin = `SELECT username, password, roles FROM ${resolvedTable} WHERE username = ? LIMIT 1;`
 
   return {
     findAdmin,

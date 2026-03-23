@@ -20,8 +20,10 @@ var fonts = {
   },
 };
 
+const resolvedVfs = pdfFonts?.pdfMake?.vfs || pdfFonts?.vfs || {};
+
 const printer = new PdfPrinter({
-  vfs: pdfFonts.pdfMake.vfs,
+  vfs: resolvedVfs,
   ...fonts,
 });
 

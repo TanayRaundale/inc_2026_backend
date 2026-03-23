@@ -19,9 +19,9 @@ function adminController(adminServices, docServices, judgeServices) {
       }
       const token = createToken({ username });
       if (user.roles.includes("JUDGE")) {
-        const judge = await adminServices.loginJudge({username, password})
+        const judge = await adminServices.findJudgeByUsername(username)
         if (!judge) throw new AppError(404, "fail", "Judge account not found")
-        const { jid } = judge[0]
+        const { jid } = judge
         sendCookie(res, { judge_data: { token, roles: user.roles } })
           .status(200)
           .json({ roles: user.roles, jid })
