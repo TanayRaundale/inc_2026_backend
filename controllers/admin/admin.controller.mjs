@@ -21,11 +21,17 @@ function adminController(adminServices, docServices, judgeServices) {
       if (user.roles.includes("JUDGE")) {
         const judge = await adminServices.loginJudge({username, password})
         if (!judge) throw new AppError(404, "fail", "Judge account not found")
-        const { jid } = judge[0]
-        sendCookie(res, { judge_data: { token, roles: user.roles } })
-          .status(200)
-          .json({ roles: user.roles, jid })
-          .end();
+        // const { jid } = judge[0]
+        // sendCookie(res, { judge_data: { token, roles: user.roles } })
+        //   .status(200)
+        //   .json({ roles: user.roles, jid })
+        //   .end();
+        const jids = judge.map(j => j.jid);
+
+sendCookie(res, { judge_data: { token, roles: user.roles } })
+  .status(200)
+  .json({ roles: user.roles, jids })
+  .end();
       }
       else sendCookie(res, { admin_data: { token, roles: user.roles } })
         .status(200)

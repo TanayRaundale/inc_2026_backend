@@ -3,7 +3,8 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - INC-Web-Team/Kalyani # Trigger on push to main branch
+      - INC-Web-Team/Kalyani
+      - fix/judge-registration-emails
 
 jobs:
   deploy:
@@ -31,10 +32,10 @@ jobs:
             git fetch origin
 
             # Switch to the specific branch
-            git checkout INC-Web-Team/Kalyani || git checkout -b INC-Web-Team/Kalyani origin/INC-Web-Team/Kalyani
+            git checkout fix/judge-registration-emails || git checkout -b fix/judge-registration-emails origin/fix/judge-registration-emails
 
             # Reset local branch to match remote exactly
-            git reset --hard origin/INC-Web-Team/Kalyani
+            git reset --hard origin/fix/judge-registration-emails
 
             # Show the last commit
             echo "Last commit on branch:"

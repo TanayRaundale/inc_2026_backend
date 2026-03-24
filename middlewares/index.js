@@ -16,7 +16,7 @@ function initializeMiddlewares(dbService) {
     function useDefaultMiddlewares(server) {
         server.use([
             cors({
-                origin: process.env.FRONTEND_URL, // Specify the allowed origin
+                origin:[process.env.FRONTEND_URL, process.env.FRONTEND_URL2],
                 credentials: true, // Allow cookies and authorization headers
                 methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
                 allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
