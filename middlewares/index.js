@@ -7,6 +7,8 @@ import formDataParser from './formDataParser.mjs';
 import protectRoute from './protectRoute.mjs';
 import { apiLimiter, registrationLimiter } from './rateLimiter.mjs';
 import validator from './validator.mjs';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.dev' });
 
 function initializeMiddlewares(dbService) {
     const { verifyAdminLogin, verifyJudgeLogin, verifyAdminLoginAndAdminRole, verifyWebMasterLogin, } = protectRoute(dbService.adminServices)

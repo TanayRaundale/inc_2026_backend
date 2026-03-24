@@ -1,4 +1,8 @@
 import { eventsName } from '../../../static/eventsData.mjs';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.dev' });
+
 
 function eventsQueries(tableName) {
     const checkUserRegistration = (event_name) => {
@@ -15,13 +19,14 @@ function eventsQueries(tableName) {
     }
 
     const completeRegistration = (event_name, no_of_members) => {
+        //console.log("MEMBERS COUNT:", no_of_members);
         let placeholders = ''
         if (event_name === 'pradnya') {
             for (let i = 0; i < no_of_members; i++) placeholders += ', ?, ?, ?, ?, ?'
         } else {
             for (let i = 0; i < no_of_members; i++) placeholders += ', ?, ?, ?, ?'
         }
-        // console.log(process.env[`INSERT_${event_name.toUpperCase()}_${no_of_members}`] + placeholders + ');')
+        //console.log(process.env[`INSERT_${event_name.toUpperCase()}_${no_of_members}`] + placeholders + ');')
         return process.env[`INSERT_${event_name.toUpperCase()}_${no_of_members}`] + placeholders + ');'
     }
 

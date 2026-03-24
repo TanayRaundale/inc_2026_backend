@@ -3,6 +3,9 @@ import { officialEmails } from '../../static/adminData.mjs';
 import { getJudgingSlots } from '../../static/eventsData.mjs';
 import emailTemplates from './htmlGenerators.email.mjs';
 import { writeFileSync } from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.dev' });
 
 const env = process.env
 
@@ -54,15 +57,15 @@ function emailService() {
 			const dynamicData = {
 				event_name,
 				team_id: data.pid,
-				tentative_dates: "21st - 23rd March",
+				tentative_dates: "27th - 29th March",
 				whatsapp_url: data.whatsapp_url,
 			}
 			const mailOptions = {
-				from: `InC 2025 <${officialEmails.get('info')}>`,
+				from: `InC 2026 <${officialEmails.get('info')}>`,
 				to: data.email,
 				bcc: `${officialEmails.get('queries')},${officialEmails.get(event_name.toLowerCase())}`,
 				replyTo: officialEmails.get('queries'),
-				subject: `Registered for PICT InC 2025 - ${event_name}`,
+				subject: `Registered for PICT InC 2026 - ${event_name}`,
 				priority: 'high',
 				text: 'Email content',
 				html: await emailTemplates.eventRegistrationEmail(dynamicData),
@@ -83,12 +86,12 @@ function emailService() {
 				.map(slot => slotsData[slot])
 				.join(", ");
 			const mailOptions = {
-				from: `InC 2025 Judging <${officialEmails.get('info')}>`,
+				from: `InC 2026 Judging <${officialEmails.get('info')}>`,
 				to: `${judge.name} <${judge.email}>`,
 				// bcc: officialEmails.get('queries'),
 				cc: officialEmails.get('judging'),
 				replyTo: officialEmails.get('queries'),
-				subject: 'Registered for PICT InC 2025 Judging',
+				subject: 'Registered for PICT InC 2026 Judging',
 				priority: 'high',
 				text: 'Email content',
 				html: await emailTemplates.judgeRegistrationEmail(judge)
@@ -106,11 +109,11 @@ function emailService() {
 			const executeSendMail = async (emailArray) => {
 				const allEmailPromises = emailArray.map(async (item) => {
 					const mailOptions = {
-						from: `InC 2025 <${officialEmails.get('info')}>`,
+						from: `InC 2026 <${officialEmails.get('info')}>`,
 						to: `${item.email}`,
 						cc: `InC Judging <${officialEmails.get('judging')}>`,
 						replyTo: `InC Queries <${officialEmails.get('queries')}>`,
-						subject: "Urgent - InC 2025: Bank Details of Winners (submit before March 23, 10pm)",
+						subject: "Urgent - InC 2026: Bank Details of Winners (submit before March 23, 10pm)",
 						priority: 'high',
 						text: "Email content",
 						// html: await emailTemplates.sendAllocationEmail(item),

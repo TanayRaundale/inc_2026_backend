@@ -122,3 +122,38 @@ ca-cert.pem
 *.jpg
 *.jpeg
 *.webp
+
+
+
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+
+# Exclude override files (usually local)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform plan output files
+*.tfplan
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Ignore editor-specific files
+*.swp
+*.bak
+*.backup
+*.DS_Store
+.idea/
+.vscode/
+
+inc2026.pem
+.terraform.lock.hcl
+.terraform

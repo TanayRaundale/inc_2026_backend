@@ -2,6 +2,9 @@ import { readFileSync } from 'fs';
 import mysql from 'mysql2/promise';
 import path from 'path';
 import { AppError } from '../../utils/index.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.dev' });
+
 const __dirname = path.resolve();
 
 function createBackupController(eventsServices, adminServices){

@@ -1,4 +1,6 @@
 import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.dev' });
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -23,7 +25,16 @@ const registrationLimiter = rateLimit({
     }
 })
 
+const healthLimiter = rateLimit({
+    windowMs: 3600 * 1000, // 1 hr
+    max: 10,             // max 10 requests per minute
+    message: { status: 'fail', message: 'Too many requests. Try later.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
 export {
     apiLimiter,
-    registrationLimiter
+    registrationLimiter,
+    healthLimiter
 }

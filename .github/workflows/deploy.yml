@@ -1,0 +1,45 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - INC-Web-Team/Kalyani # Trigger on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: SSH into EC2 and update app
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/app
+             # Fetch all remote branches
+            git fetch origin
+
+            # Switch to the specific branch
+            git checkout INC-Web-Team/Kalyani || git checkout -b INC-Web-Team/Kalyani origin/INC-Web-Team/Kalyani
+
+            # Reset local branch to match remote exactly
+            git reset --hard origin/INC-Web-Team/Kalyani
+
+            # Show the last commit
+            echo "Last commit on branch:"
+            git log -1 --oneline
+
+            # Install dependencies & restart app
+            npm install --no-audit --no-fund --progress=false
+            pm2 restart all

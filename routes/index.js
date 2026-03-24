@@ -6,10 +6,12 @@ import createJudgesRouter from './judges/judges.router.mjs';
 import createAllocationsRouter from './allocations/allocations.router.mjs';
 import createReferralRouter from './referral/referral.router.mjs';
 import createBackupRouter from './backup/backup.router.mjs';
-
+import {healthLimiter} from '../middlewares/rateLimiter.mjs';
+//
 function connectRouter(server, databaseService, emailService, docServices, middlewares) {
     const { adminServices, eventsServices, filesServices, judgesServices, allocationServices, referralServices } = databaseService
-    server.get('/', healthCheck)
+    server.get('/',healthLimiter, healthCheck)
+    server.get('/health',healthLimiter, databaseService.healthServices);
     // server.use(middlewares.apiLimiter)
     server.use('/admin', createAdminRouter(adminServices, docServices, middlewares, adminValidations, judgesServices))
     server.use('/events', createEventsRouter(eventsServices, filesServices, emailService, middlewares, eventsValidations, adminValidations, docServices))

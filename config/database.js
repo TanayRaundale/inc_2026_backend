@@ -1,5 +1,9 @@
 import mysql from 'mysql2/promise';
 import AppError from '../utils/appError.mjs';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.dev' });
+
 
 function connectDatabase() {
     try {

@@ -6,7 +6,7 @@ const groupLinks = new Map([
 ])
 
 const officialEmails = new Map([
-    ['queries', 'queries.pictinc2024@gmail.com'],
+    ['queries', 'inc2k26@gmail.com'],
     ['info', 'info.pictinc@gmail.com'],
     ['judging', 'incjudging@pict.edu'], 
     ['concepts', 'concepts.pictinc2023@gmail.com'],
@@ -15,11 +15,14 @@ const officialEmails = new Map([
     ['official', 'inc@pict.edu']
 ])
 
+
+
 const whatsappLinks = new Map([
-  ['impetus', 'https://chat.whatsapp.com/CjqqvrD2TAnHXrr4iVyjlf'],
-  ['concepts', 'https://chat.whatsapp.com/FXFSXwc285dADXNeLy7N1C'],
-  ['pradnya', 'https://chat.whatsapp.com/DxWfPhRTrhi2eCU3NMdloL'],
+  ['impetus', 'https://chat.whatsapp.com/HUHge0i0goJAboddhJETF7'],
+  ['concepts', 'https://chat.whatsapp.com/I07EdxAcmsG1ourZtldNp8'],
+  ['pradnya', 'https://chat.whatsapp.com/FMayBZIo87y8o9nXplY5Kk'],
 ])
+
 
 const projects = [
     {

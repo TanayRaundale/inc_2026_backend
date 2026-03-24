@@ -1,5 +1,7 @@
 import { sendCookie, randomID, AppError } from "../../utils/index.js";
 import { groupLinks, roles, whatsappLinks } from "../../static/adminData.mjs";
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.dev' });
 
 function creationsJudgesController(judgesServices, emailService) {
   async function insertJudge(req, res, next) {
