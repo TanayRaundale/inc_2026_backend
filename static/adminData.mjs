@@ -7,7 +7,7 @@ const groupLinks = new Map([
 
 const officialEmails = new Map([
     ['queries', 'inc2k26@gmail.com'],
-    ['info', 'info.pictinc@gmail.com'],
+    ['info', 'inc2k26@gmail.com'],
     ['judging', 'incjudging@pict.edu'], 
     ['concepts', 'concepts.pictinc2023@gmail.com'],
     ['impetus', 'impetus2025@gmail.com'],
