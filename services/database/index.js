@@ -5,6 +5,7 @@ import judgesServices from './judges/judges.database.services.mjs';
 import allocationServices from './allocations/allocations.database.services.mjs';
 import referralServices from './referral/referral.database.services.mjs';
 import healthServices from '../../services/database/health/health.database.service.mjs';
+import analyticsServices from './analytics/analytics.database.services.mjs';
 
 function databaseService(db) {
     return {
@@ -15,6 +16,7 @@ function databaseService(db) {
         allocationServices: allocationServices(db),
         referralServices: referralServices(db),
         healthServices:healthServices(db),
+        analyticsServices:analyticsServices(db),
         db
     }
 }
