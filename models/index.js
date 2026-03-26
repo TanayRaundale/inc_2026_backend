@@ -11,6 +11,7 @@ import { conceptsQueries as _conceptsQueries } from './queries/events/concepts/c
 import { ticketQueries as _ticketQueries } from './queries/events/tickets/tickets.queries.mjs';
 import { filesQueries as _filesQueries } from './queries/files/files.queries.mjs';
 import { judgesQueries as _judgesQueries } from './queries/judges/judges.queries.mjs';
+import { analyticsQueries as _analyticsQueries } from './queries/analytics/analytics.queries.mjs';
 import { allocationQueries as _allocationQueries } from './queries/allocation/allocation.queries.mjs';
 import dotenv from 'dotenv';
 
@@ -39,3 +40,4 @@ export const ticketQueries = _ticketQueries(tables.ticketTable)
 export const filesQueries = _filesQueries(tables.filesTable)
 export const judgesQueries = _judgesQueries(tables.judgesTable)
 export const allocationQueries = _allocationQueries()
+export const analyticsQueries=_analyticsQueries()

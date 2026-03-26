@@ -6,19 +6,29 @@ import createJudgesRouter from './judges/judges.router.mjs';
 import createAllocationsRouter from './allocations/allocations.router.mjs';
 import createReferralRouter from './referral/referral.router.mjs';
 import createBackupRouter from './backup/backup.router.mjs';
+import createAdminViewRouter from './admin-view/AdminView.js';
 import {healthLimiter} from '../middlewares/rateLimiter.mjs';
+import createAnalyticsRouter from './analytics/analytics.router.mjs';
 //
 function connectRouter(server, databaseService, emailService, docServices, middlewares) {
-    const { adminServices, eventsServices, filesServices, judgesServices, allocationServices, referralServices } = databaseService
+    const { adminServices, eventsServices, filesServices, judgesServices, allocationServices, referralServices,analyticsServices } = databaseService
     server.get('/',healthLimiter, healthCheck)
     server.get('/health',healthLimiter, databaseService.healthServices);
     // server.use(middlewares.apiLimiter)
     server.use('/admin', createAdminRouter(adminServices, docServices, middlewares, adminValidations, judgesServices))
+    server.use('/view/admin', createAdminViewRouter(databaseService,middlewares, adminValidations))
     server.use('/events', createEventsRouter(eventsServices, filesServices, emailService, middlewares, eventsValidations, adminValidations, docServices))
     server.use('/judge', createJudgesRouter(judgesServices, eventsServices, emailService, middlewares, judgesValidations, adminValidations, eventsValidations))
     server.use('/allocations', createAllocationsRouter(emailService, allocationServices, eventsServices, judgesServices, middlewares, adminValidations))
     server.use('/referral', createReferralRouter(referralServices))
     server.use('/backup', createBackupRouter(eventsServices, adminServices));
+    server.use(
+  '/analytics',
+  createAnalyticsRouter(
+    analyticsServices,  // pass the actual object with getDashboard
+    middlewares
+  )
+);
 
     server.use('*', undefinedRoute)
     server.use(globalError)
