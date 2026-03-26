@@ -14,7 +14,8 @@ function databaseService(db) {
         judgesServices: judgesServices(db),
         allocationServices: allocationServices(db),
         referralServices: referralServices(db),
-        healthServices:healthServices(db)
+        healthServices:healthServices(db),
+        db
     }
 }
 
