@@ -579,85 +579,190 @@ function createAdminViewRouter(dbService, middlewares, adminValidations) {
   });
 
   // ---------------------- /allocations ----------------------
-  router.get('/allocations', async (req, res) => {
-    const db = dbService.db;
-    const { event = 'impetus' } = req.query;
+  // router.get('/allocations', async (req, res) => {
+  //   const db = dbService.db;
+  //   const { event = 'impetus' } = req.query;
 
-    try {
-      const [judgesRows] = await db.query(`
-        SELECT jid, name, mode
-        FROM judges
-        WHERE JSON_CONTAINS(events, JSON_QUOTE(?))
-        ORDER BY name;
-      `, [event]);
+  //   try {
+  //     const [judgesRows] = await db.query(`
+  //       SELECT jid, name, mode
+  //       FROM judges
+  //       WHERE JSON_CONTAINS(events, JSON_QUOTE(?))
+  //       ORDER BY name;
+  //     `, [event]);
 
-      const [allocRows] = await db.query(`
-        SELECT jid, pid
-        FROM allocations
-        WHERE event_name = ?
-      `, [event]);
+  //     const [allocRows] = await db.query(`
+  //       SELECT jid, pid
+  //       FROM allocations
+  //       WHERE event_name = ?
+  //     `, [event]);
 
-      const allocationMap = new Map();
-      allocRows.forEach(row => {
-        if (!allocationMap.has(row.jid)) allocationMap.set(row.jid, []);
-        allocationMap.get(row.jid).push(row.pid);
-      });
+  //     const allocationMap = new Map();
+  //     allocRows.forEach(row => {
+  //       if (!allocationMap.has(row.jid)) allocationMap.set(row.jid, []);
+  //       allocationMap.get(row.jid).push(row.pid);
+  //     });
 
-      const [projectsRows] = await db.query(`
-        SELECT pid, title
-        FROM ${event === 'impetus' ? 'impetus_projects' : 'concepts_projects'}
-      `);
+  //     const [projectsRows] = await db.query(`
+  //       SELECT pid, title
+  //       FROM ${event === 'impetus' ? 'impetus_projects' : 'concepts_projects'}
+  //     `);
 
-      const projectMap = new Map(projectsRows.map(p => [p.pid, p.title]));
+  //     const projectMap = new Map(projectsRows.map(p => [p.pid, p.title]));
 
-      const [evalRows] = await db.query(`
-        SELECT pid, jid, total
-        FROM ${event === 'impetus' ? 'impetus_evaluation' : 'concepts_evaluation'}
-      `);
+  //     const [evalRows] = await db.query(`
+  //       SELECT pid, jid, total
+  //       FROM ${event === 'impetus' ? 'impetus_evaluation' : 'concepts_evaluation'}
+  //     `);
 
-      const evalMap = new Map();
-      evalRows.forEach(row => {
-        evalMap.set(`${row.pid}|${row.jid}`, row.total != null && Number(row.total) > 0);
-      });
+  //     const evalMap = new Map();
+  //     evalRows.forEach(row => {
+  //       evalMap.set(`${row.pid}|${row.jid}`, row.total != null && Number(row.total) > 0);
+  //     });
 
-      const judges = judgesRows.map(judge => {
-        const allocatedPids = allocationMap.get(judge.jid) || [];
-        const projects = allocatedPids.map(pid => ({
-          pid,
-          title: projectMap.get(pid) || 'Unknown',
-          evaluated: evalMap.get(`${pid}|${judge.jid}`) || false
-        }));
+  //     const judges = judgesRows.map(judge => {
+  //       const allocatedPids = allocationMap.get(judge.jid) || [];
+  //       const projects = allocatedPids.map(pid => ({
+  //         pid,
+  //         title: projectMap.get(pid) || 'Unknown',
+  //         evaluated: evalMap.get(`${pid}|${judge.jid}`) || false
+  //       }));
 
-        const totalAllocated = projects.length;
-        const evaluatedCount = projects.filter(p => p.evaluated).length;
-        const remaining = totalAllocated - evaluatedCount;
+  //       const totalAllocated = projects.length;
+  //       const evaluatedCount = projects.filter(p => p.evaluated).length;
+  //       const remaining = totalAllocated - evaluatedCount;
 
-        let evaluationStatus = null;
-        if (totalAllocated === 0) evaluationStatus = null;
-        else if (evaluatedCount === 0) evaluationStatus = 'incomplete';
-        else if (evaluatedCount === totalAllocated) evaluationStatus = 'completed';
-        else evaluationStatus = 'partial';
+  //       let evaluationStatus = null;
+  //       if (totalAllocated === 0) evaluationStatus = null;
+  //       else if (evaluatedCount === 0) evaluationStatus = 'incomplete';
+  //       else if (evaluatedCount === totalAllocated) evaluationStatus = 'completed';
+  //       else evaluationStatus = 'partial';
 
-        return {
-          jid: judge.jid,
-          name: judge.name,
-          mode: judge.mode || 'Offline',
-          is_online: judge.mode?.toLowerCase() === 'online',
-          allocated_projects: allocatedPids.join(','),
-          projects,
-          totalAllocated,
-          evaluatedCount,
-          remaining,
-          evaluationStatus
-        };
-      });
+  //       return {
+  //         jid: judge.jid,
+  //         name: judge.name,
+  //         mode: judge.mode || 'Offline',
+  //         is_online: judge.mode?.toLowerCase() === 'online',
+  //         allocated_projects: allocatedPids.join(','),
+  //         projects,
+  //         totalAllocated,
+  //         evaluatedCount,
+  //         remaining,
+  //         evaluationStatus
+  //       };
+  //     });
 
-      res.json({ success: true, event, totalJudges: judges.length, judges });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ success: false, message: err.message });
-    }
-  });
+  //     res.json({ success: true, event, totalJudges: judges.length, judges });
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.status(500).json({ success: false, message: err.message });
+  //   }
+  // });
+
+router.get('/allocations', async (req, res) => {
+  const db = dbService.db;
+  const { event = 'impetus' } = req.query;
+
+  try {
+    const [judgesRows] = await db.query(`
+      SELECT jid, name, mode, domains, email, phone,slots
+      FROM judges
+      WHERE JSON_CONTAINS(events, JSON_QUOTE(?))
+      ORDER BY name;
+    `, [event]);
+
+    const [allocRows] = await db.query(`
+      SELECT jid, pid
+      FROM allocations
+      WHERE event_name = ?
+    `, [event]);
+
+    const allocationMap = new Map();
+    allocRows.forEach(row => {
+      if (!allocationMap.has(row.jid)) allocationMap.set(row.jid, []);
+      allocationMap.get(row.jid).push(row.pid);
+    });
+
+    const [projectsRows] = await db.query(`
+      SELECT pid, title
+      FROM ${event === 'impetus' ? 'impetus_projects' : 'concepts_projects'}
+    `);
+
+    const projectMap = new Map(projectsRows.map(p => [p.pid, p.title]));
+
+    const [evalRows] = await db.query(`
+      SELECT pid, jid, total
+      FROM ${event === 'impetus' ? 'impetus_evaluation' : 'concepts_evaluation'}
+    `);
+
+    const evalMap = new Map();
+    evalRows.forEach(row => {
+      evalMap.set(`${row.pid}|${row.jid}`, row.total != null && Number(row.total) > 0);
+    });
+
+    const judges = judgesRows.map(judge => {
+      const allocatedPids = allocationMap.get(judge.jid) || [];
+
+      const projects = allocatedPids.map(pid => ({
+        pid,
+        title: projectMap.get(pid) || 'Unknown',
+        evaluated: evalMap.get(`${pid}|${judge.jid}`) || false
+      }));
+
+      const totalAllocated = projects.length;
+      const evaluatedCount = projects.filter(p => p.evaluated).length;
+      const remaining = totalAllocated - evaluatedCount;
+
+      let evaluationStatus = 'incomplete';
+      if (totalAllocated === 0) evaluationStatus = null;
+      else if (evaluatedCount === totalAllocated) evaluationStatus = 'completed';
+      else if (evaluatedCount > 0) evaluationStatus = 'partial';
+
+      // Fixed Online/Offline logic as per your clarification
+      const modeValue = judge.mode !== null && judge.mode !== undefined 
+        ? Number(judge.mode) 
+        : 1; // default to offline if null/undefined
+
+      const isOnline = modeValue === 0;   // 0 = Online, 1 = Offline
+
+      return {
+        jid: judge.jid,
+        name: judge.name,
+        email: judge.email || '',
+        phone: judge.phone || '',
+        mode: judge.mode || '1',           // keep original for reference
+        is_online: isOnline,               // true = Online, false = Offline
+        domains: Array.isArray(judge.domains)
+          ? judge.domains
+          : (judge.domains ? JSON.parse(judge.domains) : []),
+           slots: Array.isArray(judge.slots)
+    ? judge.slots
+    : (judge.slots ? JSON.parse(judge.slots) : []),
+        allocated_projects: allocatedPids.join(','),
+        projects,
+        totalAllocated,
+        evaluatedCount,
+        remaining,
+        evaluationStatus
+      };
+    });
+
+    res.json({
+      success: true,
+      event,
+      totalJudges: judges.length,
+      judges
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
 
   // ---------------------- /project-allocations ----------------------
   router.get('/project-allocations', async (req, res) => {
